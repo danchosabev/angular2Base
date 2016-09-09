@@ -32,20 +32,21 @@ gulp.task("scriptsNStyles", () => {
 		.pipe(gulp.dest("./wwwroot/libs"));
 });
 
-//var tsProject = ts.createProject('scripts/tsconfig.json');
-//gulp.task('ts', function (done) {
-//	//var tsResult = tsProject.src()
-//	var tsResult = gulp.src([
-//			"scripts/*.ts"
-//	])
-//		.pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
-//	return tsResult.js.pipe(gulp.dest('./wwwroot/appScripts'));
-//});
+var tsProject = ts.createProject('app/tsconfig.json');
+gulp.task('ts', function (done) {
+	//var tsResult = tsProject.src()
+	var tsResult = gulp.src([
+			"app/*.ts"
+	])
+	.pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
 
-//gulp.task('watch', ['watch.ts']);
+	return tsResult.js.pipe(gulp.dest('./wwwroot/app'));
+});
 
-//gulp.task('watch.ts', ['ts'], function () {
-//	return gulp.watch('scripts/*.ts', ['ts']);
-//});
+gulp.task('watch', ['watch.ts']);
 
-gulp.task('default', ['scriptsNStyles']); // , 'watch'
+gulp.task('watch.ts', ['ts'], function () {
+	return gulp.watch('app/*.ts', ['ts']);
+});
+
+gulp.task('default', ['scriptsNStyles', 'watch']); //
